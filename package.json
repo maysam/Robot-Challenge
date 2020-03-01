@@ -1,0 +1,39 @@
+{
+  "name": "certsy_challenge",
+  "version": "1.0.0",
+  "description": "Robot Challenge",
+  "main": "index.js",
+  "author": "Maysam Torabi",
+  "license": "MIT",
+  "engines": {
+    "node": "^12.14.0",
+    "npm": "^6.13.4",
+    "yarn": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.9",
+    "@types/jest": "^25.1.3",
+    "@types/mocha": "^7.0.1",
+    "@types/node": "^13.7.5",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "jest": "^25.1.0",
+    "mocha": "^7.0.1",
+    "mock-stdin": "^1.0.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.6.2",
+    "ts-sinon": "^1.0.25",
+    "tslint": "^6.0.0",
+    "typescript": "^3.8.2"
+  },
+  "scripts": {
+    "lint": "eslint '*/**/*.{js,ts,tsx}' -c .eslintrc.js",
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "start": "ts-node src/start.ts"
+  }
+}
