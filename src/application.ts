@@ -11,13 +11,18 @@ export default class application {
 
   run() {
     process.stdin.on('data', buffer => {
-      const input = buffer.toString().trim();
-      try {
-        const { command, ...args } = CommandParser.parse(input);
-        this.engine.execute(command, args);
-      } catch (err) {
-        console.error(err);
+      const inputs = buffer.toString().split('\n')
+      inputs.pop() // remove the last part after last newline character
+      for (const index in inputs) {
+        const input = inputs[index]
+        try {
+          const { command, ...args } = CommandParser.parse(input);
+          this.engine.execute(command, args);
+        } catch (err) {
+          console.error(err);
+        }
       }
     });
   }
 }
+
