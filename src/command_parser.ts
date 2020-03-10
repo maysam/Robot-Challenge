@@ -1,4 +1,4 @@
-import { isValidDirection, toDirection } from '../lib/directions';
+import { Direction } from '../lib/directions';
 import { Command } from '../lib/commands';
 
 const CommandParser = {
@@ -18,12 +18,12 @@ const CommandParser = {
 			const [_, x_str, y_str, direction] = command.match(
 				/PLACE\s(\d+),(\d+),([A-Z]+)/
 			);
-			if (isValidDirection(direction)) {
+			if (Direction.isValid(direction)) {
 				return {
 					command: Command.PLACE,
 					x: parseInt(x_str),
 					y: parseInt(y_str),
-					direction: toDirection(direction),
+					direction: Direction.parse(direction),
 				};
 			} else {
 				throw 'Invalid Direction';

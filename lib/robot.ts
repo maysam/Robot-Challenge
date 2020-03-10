@@ -9,7 +9,7 @@ export interface RobotType {
   table: Table;
 }
 
-export default class Robot {
+export default class Robot implements RobotType {
   x: number;
   y: number;
   facing: Direction;
@@ -22,7 +22,7 @@ export default class Robot {
     this.table = input.table;
   }
 
-  turnLeft() {
+  turnLeft(): Robot {
     return new Robot({
       x: this.x,
       y: this.y,
@@ -31,7 +31,7 @@ export default class Robot {
     });
   }
 
-  turnRight() {
+  turnRight(): Robot {
     return new Robot({
       x: this.x,
       y: this.y,
@@ -40,7 +40,7 @@ export default class Robot {
     });
   }
 
-  move() {
+  move(): Robot {
     if (this.table) {
       const new_robot = new Robot({
         x: this.x + movement(this.facing)[0],
@@ -55,32 +55,7 @@ export default class Robot {
     return this;
   }
 
-  // move() {
-  //   if (this.table) {
-  //     console.log(this);
-  //     console.log(movement(this.facing, this));
-  //     const new_robot = movement(this.facing, this);
-  //     if (this.table.contains(new_robot)) {
-  //       return new_robot;
-  //     }
-  //   }
-  //   return this;
-  // }
-
-  // cloneWith(data) {
-  //   return new Robot({
-  //     ...this,
-  //     ...data,
-  //   });
-  //   // return new Robot({
-  //   //   x: data.x || this.x,
-  //   //   y: data.y || this.y,
-  //   //   facing: data.facing || this.facing,
-  //   //   table: data.table || this.table,
-  //   // });
-  // }
-
-  toString() {
+  toString(): string {
     return `${this.x},${this.y},${this.facing}`;
   }
 }

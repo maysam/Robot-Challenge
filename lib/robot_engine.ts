@@ -2,7 +2,7 @@ import Robot from './robot';
 import Table from './table';
 import { Command } from './commands';
 
-export default class robot_engine {
+export default class RobotEngine {
   table: Table;
   robot: Robot;
 

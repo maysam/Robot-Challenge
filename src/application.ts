@@ -1,11 +1,13 @@
+import * as Default from './defaults'
+
 import Table from '../lib/table';
 import RobotEngine from '../lib/robot_engine';
 import CommandParser from './command_parser';
 
-export default class application {
+export default class Application {
   engine: RobotEngine;
 
-  constructor({ width = 5, height = 5 }) {
+  constructor({ width = Default.Width, height = Default.Height }) {
     this.engine = new RobotEngine({ width, height });
   }
 

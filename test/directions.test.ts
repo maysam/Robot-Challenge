@@ -1,33 +1,28 @@
 import { expect, assert } from 'chai';
 
-import {
-	Direction,
-	isValidDirection,
-	toDirection,
-	leftOf,
-	rightOf,
-	movement,
-} from '../lib/directions';
+import { Direction, leftOf, rightOf, movement } from '../lib/directions';
 
 describe('Directions', () => {
 	describe('toDirection', () => {
 		it('converts string directions to Type Direction', () => {
-			assert.equal(toDirection('NORTH'), Direction.North);
+			assert.equal(Direction.parse('NORTH'), Direction.North);
 		});
 
 		it('throws error when string is not a valid direction', () => {
-			expect(() => toDirection('wrong_direction')).to.throw('Invalid Direction');
+			expect(() => Direction.parse('wrong_direction')).to.throw(
+				'Invalid Direction'
+			);
 		});
 	});
 
 	describe('isValidDirection', () => {
 		it('should validated direction strings correctly', () => {
-			assert.isTrue(isValidDirection('NORTH'));
-			assert.isFalse(isValidDirection('North'));
+			assert.isTrue(Direction.isValid('NORTH'));
+			assert.isFalse(Direction.isValid('North'));
 
-			assert.isTrue(isValidDirection('EAST'));
-			assert.isTrue(isValidDirection('SOUTH'));
-			assert.isTrue(isValidDirection('WEST'));
+			assert.isTrue(Direction.isValid('EAST'));
+			assert.isTrue(Direction.isValid('SOUTH'));
+			assert.isTrue(Direction.isValid('WEST'));
 		});
 	});
 
