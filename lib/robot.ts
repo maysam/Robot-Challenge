@@ -2,20 +2,20 @@ import Table from './table';
 import { Direction, leftOf, rightOf, movement } from './directions';
 const { North, East, South, West } = Direction;
 
-export interface RobotType {
+export interface IRobot {
   x: number;
   y: number;
   facing: Direction;
   table: Table;
 }
 
-export default class Robot implements RobotType {
+export default class Robot implements IRobot {
   x: number;
   y: number;
   facing: Direction;
   table: Table;
 
-  constructor(input: RobotType) {
+  constructor(input: IRobot) {
     this.x = input.x;
     this.y = input.y;
     this.facing = input.facing;

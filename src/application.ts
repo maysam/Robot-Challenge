@@ -1,4 +1,4 @@
-import * as Default from './defaults'
+import * as Default from '../lib/defaults'
 
 import Table from '../lib/table';
 import RobotEngine from '../lib/robot_engine';

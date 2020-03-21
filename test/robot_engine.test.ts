@@ -3,7 +3,7 @@ import * as sinon from 'ts-sinon';
 
 import RobotEngine from '../lib/robot_engine';
 import Table from '../lib/table';
-import { RobotType } from '../lib/robot';
+import { IRobot } from '../lib/robot';
 import { Direction } from '../lib/directions';
 import { Command } from '../lib/commands';
 
@@ -28,12 +28,14 @@ describe('Robot Engine', () => {
 				direction,
 			});
 			assert.isTrue(spy.calledWithExactly({ x, y, direction }));
+			assert.isObject(robot_engine.robot);
 		});
 
 		it('throws an error if the first command is not the PLACE command', () => {
 			expect(() => robot_engine.execute(Command.MOVE, {})).to.throw(
 				'The first valid command to the robot is a PLACE command'
 			);
+			assert.isNotObject(robot_engine.robot);
 		});
 
 		it('calls move on robot for MOVE command', () => {
@@ -84,9 +86,9 @@ describe('Robot Engine', () => {
 	});
 
 	describe('place robot', () => {
-		it('places the robot on the table', () => {
-			robot_engine.place_robot({ x, y, direction });
-			assert.deepEqual(robot_engine.robot as RobotType, {
+		it('places the robot on the table successfully', () => {
+			const robot = robot_engine.place_robot({ x, y, direction });
+			assert.deepEqual(robot as IRobot, {
 				x,
 				y,
 				facing: direction,

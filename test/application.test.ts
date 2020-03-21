@@ -58,7 +58,7 @@ describe('Application', () => {
 				engine_execute_stub.restore();
 			});
 
-			it('executes PLACE commands', () => {
+			it('executes PLACE command', () => {
 				const place_command = `PLACE ${x},${y},${Direction.East}\n`;
 
 				app.run();
