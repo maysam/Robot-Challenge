@@ -5,6 +5,23 @@ import { Command } from './commands';
 export default class RobotEngine {
   table: Table;
   robot: Robot;
+  instructions = {
+    PLACE: inputs => {
+      this.place_robot(inputs);
+    },
+    MOVE: () => {
+      this.robot = this.robot.move();
+    },
+    LEFT: () => {
+        this.robot = this.robot.turnLeft();
+    },
+    RIGHT: () => {
+      this.robot = this.robot.turnRight();
+    },
+    REPORT: () => {
+      console.log(`OUTPUT: ${this.robot}`);
+    }
+  };
 
   constructor({ width = 5, height = 5 }) {
     this.table = new Table({ width, height });
@@ -14,23 +31,7 @@ export default class RobotEngine {
     if (!this.robot && command != Command.PLACE) {
       throw 'The first valid command to the robot is a PLACE command';
     }
-    switch (command) {
-      case Command.PLACE:
-        this.place_robot(args);
-        break;
-      case Command.MOVE:
-        this.robot = this.robot.move();
-        break;
-      case Command.LEFT:
-        this.robot = this.robot.turnLeft();
-        break;
-      case Command.RIGHT:
-        this.robot = this.robot.turnRight();
-        break;
-      case Command.REPORT:
-        console.log(`OUTPUT: ${this.robot}`);
-        break;
-    }
+    this.instructions[Command[command]](args)
   }
 
   place_robot({ x, y, direction }) {
