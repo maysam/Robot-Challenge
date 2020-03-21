@@ -1,4 +1,4 @@
-import application from './application'
+import Application from './application';
 
-const app = new application({});
+const app = new Application({});
 app.run();

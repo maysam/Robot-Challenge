@@ -1,4 +1,4 @@
-import Robot from './robot';
+import { RobotInterface } from './robot';
 
 export interface TableType {
   width: number;
@@ -14,9 +14,9 @@ export default class Table {
     this.height = input.height;
   }
 
-  contains(robot: Robot): boolean {
-    if (0 <= robot.x && robot.x < this.width) {
-      if (0 <= robot.y && robot.y < this.height) {
+  contains(robot: RobotInterface): boolean {
+    if (robot.x >= 0 && robot.x < this.width) {
+      if (robot.y >= 0 && robot.y < this.height) {
         return true;
       }
     }

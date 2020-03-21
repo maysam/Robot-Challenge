@@ -1,7 +1,6 @@
-import * as Default from '../lib/defaults'
-
-import Table from '../lib/table';
+import * as Default from '../lib/defaults';
 import RobotEngine from '../lib/robot_engine';
+
 import CommandParser from './command_parser';
 
 export default class Application {
@@ -11,20 +10,22 @@ export default class Application {
     this.engine = new RobotEngine({ width, height });
   }
 
-  run() {
+  run(): void {
     process.stdin.on('data', buffer => {
-      const inputs = buffer.toString().split('\n')
-      inputs.pop() // remove the last part after last newline character
+      const inputs = buffer.toString().split('\n');
+      // remove the last part after last newline character
+      inputs.pop();
       for (const index in inputs) {
-        const input = inputs[index]
-        try {
-          const { command, ...args } = CommandParser.parse(input);
-          this.engine.execute(command, args);
-        } catch (err) {
-          console.error(err);
+        if ({}.hasOwnProperty.call(inputs, index)) {
+          const input = inputs[index];
+          try {
+            const { command, ...args } = CommandParser.parse(input);
+            this.engine.execute(command, args);
+          } catch (err) {
+            console.error(err.message);
+          }
         }
       }
     });
   }
 }
-

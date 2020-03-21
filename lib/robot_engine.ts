@@ -1,4 +1,4 @@
-import Robot, { IRobot } from './robot';
+import Robot from './robot';
 import Table from './table';
 import { Command } from './commands';
 import * as Default from './defaults';
@@ -6,8 +6,6 @@ import * as Default from './defaults';
 interface Instruction {
   (any): Robot;
 }
-
-type CommandType = { [key in Command]: any };
 
 interface InstructionHash {
   [command: string]: Instruction;
@@ -19,7 +17,7 @@ export default class RobotEngine {
 
   // every state is supposed to replace the current robot state
   instructions: InstructionHash = {
-    PLACE: inputs => this.place_robot(inputs),
+    PLACE: inputs => this.placeRobot(inputs),
     MOVE: () => this.robot.move(),
     LEFT: () => this.robot.turnLeft(),
     RIGHT: () => this.robot.turnRight(),
@@ -33,15 +31,17 @@ export default class RobotEngine {
     this.table = new Table({ width, height });
   }
 
-  execute(command, args) {
-    if (!this.robot && command != Command.PLACE) {
-      throw 'The first valid command to the robot is a PLACE command';
+  execute(command, args): void {
+    if (!this.robot && command !== Command.PLACE) {
+      throw new Error(
+        'The first valid command to the robot is a PLACE command'
+      );
     }
     this.robot = this.instructions[Command[command]](args);
   }
 
-  private place_robot({ x, y, direction }) {
-    const new_robot = new Robot({
+  private placeRobot({ x, y, direction }): Robot {
+    const newRobot = new Robot({
       x,
       y,
       facing: direction,
@@ -49,13 +49,13 @@ export default class RobotEngine {
     });
 
     // - A robot that is not on the table can choose to ignore the MOVE, LEFT, RIGHT and REPORT commands.
-    // return new_robot;
+    // return newRobot;
 
-    if (!this.table.contains(new_robot)) {
-      throw 'Cannot place robot outside the table';
-      // new_robot = null;
-      // return new_robot;
+    if (!this.table.contains(newRobot)) {
+      throw new Error('Cannot place robot outside the table');
+      // newRobot = null;
+      // return newRobot;
     }
-    return new_robot;
+    return newRobot;
   }
 }

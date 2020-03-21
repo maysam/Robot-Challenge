@@ -1,21 +1,20 @@
 import Table from './table';
 import { Direction, leftOf, rightOf, movement } from './directions';
-const { North, East, South, West } = Direction;
 
-export interface IRobot {
+export interface RobotInterface {
   x: number;
   y: number;
   facing: Direction;
   table: Table;
 }
 
-export default class Robot implements IRobot {
+export default class Robot implements RobotInterface {
   x: number;
   y: number;
   facing: Direction;
   table: Table;
 
-  constructor(input: IRobot) {
+  constructor(input: RobotInterface) {
     this.x = input.x;
     this.y = input.y;
     this.facing = input.facing;
@@ -42,14 +41,14 @@ export default class Robot implements IRobot {
 
   move(): Robot {
     if (this.table) {
-      const new_robot = new Robot({
+      const newRobot = new Robot({
         x: this.x + movement(this.facing)[0],
         y: this.y + movement(this.facing)[1],
         table: this.table,
         facing: this.facing,
       });
-      if (this.table.contains(new_robot)) {
-        return new_robot;
+      if (this.table.contains(newRobot)) {
+        return newRobot;
       }
     }
     return this;

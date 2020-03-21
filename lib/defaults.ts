@@ -1,2 +1,2 @@
-export const Width = 5
-export const Height = 5
+export const Width = 5;
+export const Height = 5;

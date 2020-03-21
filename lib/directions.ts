@@ -1,4 +1,4 @@
-export enum Direction {
+enum Direction {
   North = 'NORTH',
   East = 'EAST',
   South = 'SOUTH',
@@ -12,47 +12,48 @@ const mappings = {
   WEST: Direction.West,
 };
 
-export namespace Direction {
-  export const isValid = (direction: string): boolean => direction in mappings
-
+namespace Direction {
+  export const isValid = (direction: string): boolean => direction in mappings;
 
   export const parse = (direction: string): Direction => {
     if (isValid(direction)) {
       return mappings[direction];
     }
-    throw 'Invalid Direction';
+    throw new Error('Invalid Direction');
   };
 }
 
-export const leftsOf = {
+const leftsOf = {
   NORTH: Direction.West,
   WEST: Direction.South,
   SOUTH: Direction.East,
   EAST: Direction.North,
 };
 
-export const leftOf = (direction: Direction): Direction => {
+const leftOf = (direction: Direction): Direction => {
   return leftsOf[direction];
 };
 
-export const rightsOf = {
+const rightsOf = {
   NORTH: Direction.East,
   WEST: Direction.North,
   SOUTH: Direction.West,
   EAST: Direction.South,
 };
 
-export const rightOf = (direction: Direction): Direction => {
+const rightOf = (direction: Direction): Direction => {
   return rightsOf[direction];
 };
 
-export const vectorOf: Record<Direction, [number, number]> = {
+const vectorOf: Record<Direction, [number, number]> = {
   NORTH: [0, 1],
   WEST: [-1, 0],
   SOUTH: [0, -1],
   EAST: [1, 0],
 };
 
-export const movement = (direction: Direction): [number, number] => {
+const movement = (direction: Direction): [number, number] => {
   return vectorOf[direction];
 };
+
+export { Direction, leftOf, rightOf, movement };
