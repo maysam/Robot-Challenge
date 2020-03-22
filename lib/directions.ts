@@ -12,26 +12,11 @@ const mappings = {
   WEST: Direction.West,
 };
 
-namespace Direction {
-  export const isValid = (direction: string): boolean => direction in mappings;
-
-  export const parse = (direction: string): Direction => {
-    if (isValid(direction)) {
-      return mappings[direction];
-    }
-    throw new Error('Invalid Direction');
-  };
-}
-
 const leftsOf = {
   NORTH: Direction.West,
   WEST: Direction.South,
   SOUTH: Direction.East,
   EAST: Direction.North,
-};
-
-const leftOf = (direction: Direction): Direction => {
-  return leftsOf[direction];
 };
 
 const rightsOf = {
@@ -41,10 +26,6 @@ const rightsOf = {
   EAST: Direction.South,
 };
 
-const rightOf = (direction: Direction): Direction => {
-  return rightsOf[direction];
-};
-
 const vectorOf: Record<Direction, [number, number]> = {
   NORTH: [0, 1],
   WEST: [-1, 0],
@@ -52,8 +33,26 @@ const vectorOf: Record<Direction, [number, number]> = {
   EAST: [1, 0],
 };
 
-const movement = (direction: Direction): [number, number] => {
-  return vectorOf[direction];
-};
+namespace Direction {
+  export const isValid = (direction: string): boolean => direction in mappings;
 
-export { Direction, leftOf, rightOf, movement };
+  export const parse = (direction: string): Direction => {
+    if (isValid(direction)) {
+      return mappings[direction];
+    }
+    throw new Error('Invalid Direction');
+  };
+
+  export const leftOf = (direction: Direction): Direction => {
+    return leftsOf[direction];
+  };
+
+  export const rightOf = (direction: Direction): Direction => {
+    return rightsOf[direction];
+  };
+  export const movement = (direction: Direction): [number, number] => {
+    return vectorOf[direction];
+  };
+}
+
+export default Direction;

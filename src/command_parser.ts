@@ -1,8 +1,10 @@
-import { Direction } from '../lib/directions';
-import { Command, CommandInterface } from '../lib/commands';
+import Direction from '../lib/directions';
+import { Command, ActionInterface } from '../lib/actions';
+
+const COMMAND_PARSER_REGEX = /PLACE\s(\d+),(\d+),(.+)/;
 
 const CommandParser = {
-  parse: (command): CommandInterface => {
+  parse: (command): ActionInterface => {
     const translations = {
       MOVE: Command.MOVE,
       LEFT: Command.LEFT,
@@ -14,10 +16,8 @@ const CommandParser = {
       return { command: translations[command] };
     }
 
-    if (command.match(/PLACE\s(\d+),(\d+),([A-Z]+)/)) {
-      const [, xStr, yStr, direction] = command.match(
-        /PLACE\s(\d+),(\d+),([A-Z]+)/
-      );
+    if (command.match(COMMAND_PARSER_REGEX)) {
+      const [, xStr, yStr, direction] = command.match(COMMAND_PARSER_REGEX);
       return {
         command: Command.PLACE,
         x: parseInt(xStr, 10),

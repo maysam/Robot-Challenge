@@ -1,15 +1,15 @@
 import { RobotInterface } from './robot';
 
-export interface TableType {
+export interface TableInterface {
   width: number;
   height: number;
 }
 
-export default class Table {
+export default class Table implements TableInterface {
   width: number;
   height: number;
 
-  constructor(input: TableType) {
+  constructor(input: TableInterface) {
     this.width = input.width;
     this.height = input.height;
   }

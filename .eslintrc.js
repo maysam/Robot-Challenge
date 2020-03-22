@@ -4,7 +4,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: [
     'prettier',
-    'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:shopify/esnext',
@@ -25,7 +24,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        paths: ['src', 'lib'],
+        paths: ['src', 'lib', 'test'],
         extensions: ['.js', '.ts'],
       },
     },

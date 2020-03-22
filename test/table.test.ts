@@ -2,7 +2,7 @@ import { assert } from 'chai';
 
 import Table from '../lib/table';
 import Robot from '../lib/robot';
-import { Direction } from '../lib/directions';
+import Direction from '../lib/directions';
 
 const width = 5;
 const height = 5;

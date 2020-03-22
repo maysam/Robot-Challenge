@@ -1,11 +1,17 @@
 import { expect, assert } from 'chai';
-import * as sinon from 'ts-sinon';
+import sinon from 'ts-sinon';
 
 import RobotEngine from '../lib/robot_engine';
 import Table from '../lib/table';
-import { RobotInterface } from '../lib/robot';
-import { Direction } from '../lib/directions';
-import { Command } from '../lib/commands';
+import Direction from '../lib/directions';
+import {
+  Command,
+  TurnLeft,
+  TurnRight,
+  MoveForward,
+  PlaceRobot,
+  ReportPosition,
+} from '../lib/actions';
 
 const width = 5;
 const height = 5;
@@ -14,20 +20,27 @@ const x = 1;
 const y = 2;
 const direction = Direction.East;
 let robotEngine = null;
+let sandbox = null;
 
 describe('Robot Engine', () => {
   beforeEach(() => {
     robotEngine = new RobotEngine(table);
+    sandbox = sinon.createSandbox();
   });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
   describe('execute', () => {
     it('places robot on the table for PLACE command', () => {
-      const spy = sinon.default.spy(robotEngine, 'placeRobot');
+      const runSpy = sandbox.spy(PlaceRobot.prototype, 'run');
       robotEngine.execute(Command.PLACE, {
         x,
         y,
         direction,
       });
-      assert.isTrue(spy.calledWithExactly({ x, y, direction }));
+      assert(runSpy.calledOnce);
       assert.isObject(robotEngine.robot);
     });
 
@@ -44,9 +57,9 @@ describe('Robot Engine', () => {
         y,
         direction,
       });
-      const spy = sinon.default.spy(robotEngine.robot, 'move');
-      robotEngine.execute(Command.MOVE, {});
-      assert.isTrue(spy.calledOnce);
+      const spy = sandbox.spy(MoveForward.prototype, 'run');
+      robotEngine.execute(Command.MOVE);
+      assert(spy.calledOnce);
     });
 
     it('calls turnLeft on robot for LEFT command', () => {
@@ -55,9 +68,9 @@ describe('Robot Engine', () => {
         y,
         direction,
       });
-      const spy = sinon.default.spy(robotEngine.robot, 'turnLeft');
-      robotEngine.execute(Command.LEFT, {});
-      assert.isTrue(spy.calledOnce);
+      const spy = sandbox.spy(TurnLeft.prototype, 'run');
+      robotEngine.execute(Command.LEFT);
+      assert(spy.calledOnce);
     });
 
     it('calls turnLeft on robot for RIGHT command', () => {
@@ -66,9 +79,9 @@ describe('Robot Engine', () => {
         y,
         direction,
       });
-      const spy = sinon.default.spy(robotEngine.robot, 'turnRight');
+      const spy = sandbox.spy(TurnRight.prototype, 'run');
       robotEngine.execute(Command.RIGHT, {});
-      assert.isTrue(spy.calledOnce);
+      assert(spy.calledOnce);
     });
 
     it('calls toString on robot and log on console for REPORT command', () => {
@@ -77,29 +90,11 @@ describe('Robot Engine', () => {
         y,
         direction,
       });
-      const stubConsole = sinon.default.stub(console, 'log');
-      const spy = sinon.default.spy(robotEngine.robot, 'toString');
+      const stubConsole = sandbox.stub(console, 'log');
+      const spy = sandbox.spy(ReportPosition.prototype, 'run');
       robotEngine.execute(Command.REPORT, {});
-      assert.isTrue(spy.calledOnce);
-      assert.isTrue(stubConsole.calledOnce);
-    });
-  });
-
-  describe('place robot', () => {
-    it('places the robot on the table successfully', () => {
-      const robot = robotEngine.placeRobot({ x, y, direction });
-      assert.deepEqual(robot as RobotInterface, {
-        x,
-        y,
-        facing: direction,
-        table,
-      });
-    });
-
-    it('throws error if the robot is off the table', () => {
-      expect(() =>
-        robotEngine.placeRobot({ x: 11, y: 11, direction })
-      ).to.throw('Cannot place robot outside the table');
+      assert(spy.calledOnce);
+      assert(stubConsole.calledOnce);
     });
   });
 });

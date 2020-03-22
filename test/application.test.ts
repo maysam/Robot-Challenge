@@ -2,8 +2,8 @@ import sinon from 'ts-sinon';
 
 import Application from '../src/application';
 import CommandParser from '../src/command_parser';
-import { Direction } from '../lib/directions';
-import { Command } from '../lib/commands';
+import Direction from '../lib/directions';
+import { Command } from '../lib/actions';
 
 const app = new Application({});
 const x = 3;

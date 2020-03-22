@@ -1,8 +1,8 @@
 import { expect, assert } from 'chai';
 
 import CommandParser from '../src/command_parser';
-import { Command } from '../lib/commands';
-import { Direction } from '../lib/directions';
+import { Command } from '../lib/actions';
+import Direction from '../lib/directions';
 
 describe('CommandParser', () => {
   describe('parse', () => {
